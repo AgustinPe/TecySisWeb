@@ -80,17 +80,23 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 			//let msgPrincipal = "PUEDE COMENZAR CON EL CHAT :D";
 			this.ws = new WebSocket("ws://localhost/wsGenerico");
 			this.ws.onopen = function(event) {
-				alert("Conexión establecida");
+				
+				//alert("Conexión establecida");
 				console.log(event);
-				document.getElementById("chatRoomField").disabled = false;
-    			document.getElementById("sendField").disabled = false;
-    			document.getElementById("sendButton").disabled = false;
+				//document.getElementById("chatRoomField").disabled = false;
+    			//document.getElementById("sendField").disabled = false;
+    			//document.getElementById("sendButton").disabled = false;
 				//document.getElementById("chatRoomField").textContent = msgPrincipal;
 			}
 			this.ws.onmessage = function(event) {
 				let msg = JSON.parse(event.data);
-				//console.log(msg.data);
-				document.getElementById("chatRoomField").textContent += '\n'+msg["user"]+': '+msg["texto"];
+				if(msg["type"] == "MENSAJE DE ABANDONO"){
+					alert(msg["texto"]);
+				}else{
+					document.getElementById("chatRoomField").textContent += '\n'+msg["user"]+': '+msg["texto"];
+				}
+				
+				
 			}
 		}
 		
@@ -123,6 +129,7 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 						match = new TictactoeMatch(response);
 					} else if (response.game == "GuessWhoMatch") {
 						match = new GuessWhoMatch(ko, response, $);
+						self.conectarAWebSocket();
 						match.enviarCarta($)
 					}
 					self.matches.push(match);

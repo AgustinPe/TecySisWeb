@@ -4,6 +4,7 @@ package edu.uclm.esi.tys2122.websockets;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,6 +23,8 @@ import edu.uclm.esi.tys2122.model.User;
 
 @Component
 public class WebSocketGenerico extends TextWebSocketHandler {
+	
+	String matchId;
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession wsSession) throws Exception {
@@ -67,7 +70,18 @@ public class WebSocketGenerico extends TextWebSocketHandler {
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		// TODO Auto-generated method stub
+		// PREGUNTAR A MACARIO
+		if(matchId != null) {
+			Match match = Manager.get().findMatch(matchId);
+			User userLooser = (User) session.getAttributes().get("user");
+			match.setLooser(userLooser);
+			Vector<User> users = match.getPlayers();
+			for (User usuario : users)
+				if (!usuario.getId().equals(userLooser.getId()))
+					match.setWinner(usuario);
+			String mensaje = "El jugador "+match.getWinner().getName()+" ha ganado.\nEl jugador "+match.getLooser().getName()+" ha perdido.";
+			match.enviarMensajeSalirPartida(mensaje, match.getWinner());
+		}
 		super.afterConnectionClosed(session, status);
 	}
 	
@@ -83,7 +97,7 @@ public class WebSocketGenerico extends TextWebSocketHandler {
 			//Manager.get().add(ws, ws.getHttpSession().getId());
 			//Collection<WrapperSession> wrappers = (Collection<WrapperSession>) Manager.get().getAjedrezSessionsPorWs().values();
 			 //for (WrapperSession wrapper : wrappers) {
-				String matchId = jso.getString("matchId");
+				matchId = jso.getString("matchId");
 				//JSONArray user = jso.getJSONArray("users");
 				Match match = Manager.get().findMatch(matchId);
 				match.enviarMensaje(jso.getString("texto"), speaker);

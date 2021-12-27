@@ -143,5 +143,17 @@ public abstract class Match {
 			}
 		}		
 	}
+	
+	public void enviarMensajeSalirPartida(String texto, User user) {
+		JSONObject jso = new JSONObject();
+		jso.put("type", "MENSAJE DE ABANDONO");
+		jso.put("texto", texto);
+		try {
+			user.sendMessage(jso);	
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 }

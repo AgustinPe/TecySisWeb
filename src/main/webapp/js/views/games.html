@@ -114,9 +114,9 @@
 		            <br>
 
 	              <!-- /ko -->
-					<h4>Este eres tú:</h4>
+					<h4>Este eres tu:</h4>
 		           <img data-bind="attr : { src : carta }"> 
-		           <h4>Quien es tu rival</h4>
+		           <h4>Resuelve quien es tu rival</h4>
 		           <select
 						id="nombres" data-bind="options : cartas, value : cartaQueAdivino">
 				</select> 
@@ -126,13 +126,13 @@
 
               <br>
 
-							<h2>WebSockets : ChatRoom</h2>
-							 <button data-bind="click : function() { $parent.conectarAWebSocket(); }">Conectar al chat</button>
+							<h2>Chatea con tu rival:</h2>
+							<!--  <button data-bind="click : function() { $parent.conectarAWebSocket(); }">Conectar al chat</button> -->
+							 
 							<form action="">
 								
 								<br />
-								<textarea id="chatRoomField" rows="10" cols="30" readonly
-									disabled></textarea>
+								<textarea id="chatRoomField" rows="10" cols="30"></textarea>
 
 								<br /> <input type="text"
 									data-bind="value : $parent.mensaje">
@@ -140,8 +140,7 @@
 									data-bind="click : function() {$parent.enviarMensaje($data)}" value="Enviar" type="button">
 							</form>
 
-							<script type="text/javascript" src="websocket.js">
-							</script>
+							
 
 					</li>
           <!-- /ko -->
