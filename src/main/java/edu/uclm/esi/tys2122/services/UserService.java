@@ -68,6 +68,7 @@ public class UserService {
 			if (user!=null) {
 				user.setConfirmationDate(now);
 				userRepo.save(user);
+				tokenRepo.delete(token);
 			} else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
 		} else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Token " + tokenId + " no encontrado");
 	}

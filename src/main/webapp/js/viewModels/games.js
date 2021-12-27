@@ -8,6 +8,8 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 			self.games = ko.observableArray([]);
 			self.matches = ko.observableArray([]);
 			self.error = ko.observable(null);
+			
+			self.mensaje = ko.observable();
 
 			self.x = ko.observable(null);
 			self.y = ko.observable(null);
@@ -70,6 +72,34 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 			}
 			$.ajax(data);
 		};
+		
+		conectarAWebSocket() {
+			this.ws = new WebSocket("ws://localhost/wsGenerico");
+			this.ws.onopen = function(event) {
+				alert("Conexión establecida");
+				console.log(event);
+				document.getElementById("chatRoomField").disabled = false;
+    			document.getElementById("sendField").disabled = false;
+    			document.getElementById("sendButton").disabled = false;
+			}
+			this.ws.onmessage = function(event) {
+				let msg = JSON.parse(event.data);
+				console.log(event);
+				alert("onmessage funciona");
+				document.getElementById("chatRoomField").textContent = msg.data;
+
+
+			}
+		}
+		
+		enviarMensaje(partida) {
+			let msg = {
+				type : "MENSAJE DE CHAT",
+				texto : this.mensaje(),
+				matchId : partida.id
+			}			
+			this.ws.send(JSON.stringify(msg))
+		}
 
 		joinGame(game) {
 			let self = this;
@@ -85,7 +115,8 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 					} else if (response.game == "TictactoeMatch") {
 						match = new TictactoeMatch(response);
 					} else if (response.game == "GuessWhoMatch") {
-						match = new GuessWhoMatch(ko, response);
+						match = new GuessWhoMatch(ko, response, $);
+						match.enviarCarta($)
 					}
 					self.matches.push(match);
 					console.log(JSON.stringify(response));

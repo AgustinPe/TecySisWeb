@@ -38,6 +38,10 @@ public class GamesController extends CookiesController {
 	
 	@GetMapping("/getGames")
 	public List<Game> getGames(HttpSession session) throws Exception {
+		//User user = new User();
+		//user.setName("anonimo" + session.getId());
+		//session.setAttribute("userId", user.getId());
+		Manager.get().add(session);
 		return gamesService.getGames();
 	}
 
@@ -52,7 +56,7 @@ public class GamesController extends CookiesController {
 			user.setName("anonimo" + new SecureRandom().nextInt(1000));
 			user.setEmail(user.getName() + "@" + user.getName() + ".com");
 			user.setPwd("1234");
-			session.setAttribute("userId", user.getId());
+			session.setAttribute("userId", user);
 			userRepo.save(user);
 		}
 
@@ -67,6 +71,7 @@ public class GamesController extends CookiesController {
 			game.getPendingMatches().remove(match);
 			game.getPlayingMatches().add(match);
 		}
+		Manager.get().add(match);
 		gamesService.put(match);
 		return match;
 	}
@@ -80,7 +85,7 @@ public class GamesController extends CookiesController {
 			match.move(userId, jso);
 			return match;
 		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
+ 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
 		}
 	}
 	

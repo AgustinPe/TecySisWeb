@@ -1,5 +1,7 @@
 package edu.uclm.esi.tys2122.model;
 
+import java.io.IOException;
+import java.util.Collection;
 import java.util.UUID;
 import java.util.Vector;
 
@@ -10,6 +12,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.json.JSONObject;
+import org.springframework.web.socket.WebSocketSession;
+
+import edu.uclm.esi.tys2122.websockets.WrapperSession;
 
 @Entity
 @Table(name = "partida")
@@ -108,11 +113,34 @@ public abstract class Match {
 	public void setReady(boolean ready) {
 		this.ready = ready;
 	}
+	
+	protected User findUser(String userId) {
+		for (User user : this.players)
+			if (user.getId().equals(userId))
+				return user;
+		return null;
+	}
 
 	protected abstract void checkReady();
 
 	protected abstract Board newBoard();
 
 	public abstract void move(String userId, JSONObject jso) throws Exception;
+	
+	public void enviarMensaje(String texto) {
+		JSONObject jso = new JSONObject();
+		jso.put("type", "MENSAJE DE CHAT");
+		jso.put("texto", texto);
+		// jso.put("board", this.board.toJSON());
+		
+		for (User player : this.players) {
+			try {
+				player.sendMessage(jso);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
+	}
 
 }

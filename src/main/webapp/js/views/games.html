@@ -114,29 +114,36 @@
 		            <br>
 
 	              <!-- /ko -->
-					<h4>Este eres tu:</h4>
+					<h4>Este eres tú:</h4>
 		           <img data-bind="attr : { src : carta }"> 
 		           <h4>Quien es tu rival</h4>
 		           <select
-						id="nombres">
-							<option value="css/images/Arturo.png">Arturo</option>
-							<option value="css/images/Celia.png">Celia</option>
-							<option value="css/images/Esther.png">Esther</option>
-							<option value="css/images/Hector.png">Hector</option>
-							<option value="css/images/Manuel.png">Manuel</option>
-							<option value="css/images/Maria.png">Maria</option>
-							<option value="css/images/Pablo.png">Pablo</option>
-							<option value="css/images/Raquel.png">Raquel</option>
-							<option value="css/images/Ricardo.png">Ricardo</option>
-							<option value="css/images/Sara.png">Sara</option>
-							<option value="css/images/Simon.png">Simon</option>
-							<option value="css/images/Sofia.png">Sofia</option>
-					</select> <!-- /ko -->
+						id="nombres" data-bind="options : cartas, value : cartaQueAdivino">
+				</select> 
+				<button data-bind="click : adivinar">Adivinar</button>
+				<!-- /ko -->
 
 
               <br>
-              
-            </li>
+
+							<h2>WebSockets : ChatRoom</h2>
+							 <button data-bind="click : function() { $parent.conectarAWebSocket(); }">Conectar al chat</button>
+							<form action="">
+								
+								<br />
+								<textarea id="chatRoomField" rows="10" cols="30" readonly
+									disabled></textarea>
+
+								<br /> <input type="text"
+									data-bind="value : $parent.mensaje">
+									 <input id="sendButton"
+									data-bind="click : function() {$parent.enviarMensaje($data)}" value="Enviar" type="button">
+							</form>
+
+							<script type="text/javascript" src="websocket.js">
+							</script>
+
+					</li>
           <!-- /ko -->
         </ol>
       </div>

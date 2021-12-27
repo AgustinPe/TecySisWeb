@@ -1,6 +1,9 @@
 package edu.uclm.esi.tys2122.http;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -21,6 +24,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import edu.uclm.esi.tys2122.dao.TokenRepository;
+import edu.uclm.esi.tys2122.model.Email;
+import edu.uclm.esi.tys2122.model.Token;
 import edu.uclm.esi.tys2122.model.User;
 import edu.uclm.esi.tys2122.services.UserService;
 
@@ -30,6 +36,9 @@ public class UserController extends CookiesController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TokenRepository tokenDAO;
 	
 	@PostMapping(value = "/login")
 	public void login(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> credenciales) {
@@ -43,11 +52,12 @@ public class UserController extends CookiesController {
 		Cookie cookie = readOrCreateCookie(request, response);
 		userService.insertLogin(user, ip, cookie);
 		request.getSession().setAttribute("userId", user.getId());
+		Manager.get().add(request.getSession());
 	}
 
 	@PutMapping("/register")
 	@ResponseBody
-	public String register(@RequestBody Map<String, Object> credenciales) {
+	public String register(@RequestBody Map<String, Object> credenciales) throws NoSuchAlgorithmException {
 		JSONObject jso = new JSONObject(credenciales);
 		String userName = jso.optString("userName");
 		String email = jso.optString("email");
@@ -59,6 +69,12 @@ public class UserController extends CookiesController {
 		if (pwd1.length()<4)
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Error: la contraseña debe tener al menos cuatro caracteres");
 		
+		//clase
+		MessageDigest digest = MessageDigest.getInstance("SHA3-256");
+		byte[] hashbytes = digest.digest(
+		pwd1.getBytes(StandardCharsets.UTF_8));
+		pwd1 = new String(hashbytes);
+		
 		User user = new User();
 		user.setName(userName);
 		user.setEmail(email);
@@ -66,6 +82,13 @@ public class UserController extends CookiesController {
 		user.setPicture(picture);
 		
 		userService.save(user);
+		
+		Token token = new Token(email);
+		tokenDAO.save(token);
+		
+		Email sender = new Email();
+		sender.send(email, "Hola", "Haz click en " + "https://localhost/user/validateAccount/" + token.getId());
+		
 		return "Te hemos enviado un correo para confirmar tu registro";
 	}
 	
