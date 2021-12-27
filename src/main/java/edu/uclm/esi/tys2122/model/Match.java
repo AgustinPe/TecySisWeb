@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -127,11 +128,11 @@ public abstract class Match {
 
 	public abstract void move(String userId, JSONObject jso) throws Exception;
 	
-	public void enviarMensaje(String texto) {
+	public void enviarMensaje(String texto, String speaker) {
 		JSONObject jso = new JSONObject();
 		jso.put("type", "MENSAJE DE CHAT");
 		jso.put("texto", texto);
-		// jso.put("board", this.board.toJSON());
+		jso.put("user", speaker);
 		
 		for (User player : this.players) {
 			try {

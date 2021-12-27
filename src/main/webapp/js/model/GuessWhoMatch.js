@@ -7,6 +7,7 @@ class GuessWhoMatch extends Match {
 		this.cartas = ko.observableArray(
 			["css/images/Arturo.png", "css/images/Celia.png", "css/images/Esther.png", "css/images/Hector.png", "css/images/Manuel.png", "css/images/Maria.png", "css/images/Pablo.png", "css/images/Raquel.png", "css/images/Ricardo.png", "css/images/Sara.png", "css/images/Simon.png", "css/images/Sofia.png"]
 		)
+
 	}
 
 	colocarPiezas(ko) {
@@ -93,11 +94,11 @@ class GuessWhoMatch extends Match {
 			data : JSON.stringify(info),
 			contentType : "application/json",
 			success : function(response) {
-				console.log(JSON.stringify(response));
+				alert("Tienes 2 intentos para adivinar la carta")
 			},
 			error : function(response) {
 				console.error(response.responseJSON.message);
-				self.error(response.responseJSON.message);
+
 			}
 		};
 		this.$.ajax(data);
@@ -119,13 +120,18 @@ class GuessWhoMatch extends Match {
 			data : JSON.stringify(info),
 			contentType : "application/json",
 			success : function(response) {
-				console.log(JSON.stringify(response));
-				
+				if(response.acierto == false)
+					if(response.intentos == 1)
+						alert("Has gastado 1 intento. Te quedan 1.")
+					else
+						alert("Te has quedado sin intentos, por lo que has perdido\nGANADOR: "+response.winner.name+"\nPERDEDOR: "+response.looser.name)
+				else
+					alert("GANADOR: "+response.winner.name+"\nPERDEDOR: "+response.looser.name);
 				
 			},
 			error : function(response) {
 				console.error(response.responseJSON.message);
-				self.error(response.responseJSON.message);
+
 			}
 		};
 		this.$.ajax(data);

@@ -10,5 +10,7 @@ class Match {
 		this.draw = response.draw;
 		this.board = response.board;
 		this.game = response.game;
+		this.acierto = response.acierto;
+		this.intento = response.intento;
 	}
 }

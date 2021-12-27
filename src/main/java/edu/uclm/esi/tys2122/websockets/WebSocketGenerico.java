@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.BinaryMessage;
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -64,8 +66,16 @@ public class WebSocketGenerico extends TextWebSocketHandler {
 	}
 	
 	@Override
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+		// TODO Auto-generated method stub
+		super.afterConnectionClosed(session, status);
+	}
+	
+	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		System.out.println(message.getPayload());
+		Object user = session.getAttributes().get("user");
+		String speaker = ((User) user).getName();
 		JSONObject jso = new JSONObject(message.getPayload());
 		String type = jso.getString("type");
 		if (type.equals("MENSAJE DE CHAT")) {
@@ -74,8 +84,9 @@ public class WebSocketGenerico extends TextWebSocketHandler {
 			//Collection<WrapperSession> wrappers = (Collection<WrapperSession>) Manager.get().getAjedrezSessionsPorWs().values();
 			 //for (WrapperSession wrapper : wrappers) {
 				String matchId = jso.getString("matchId");
+				//JSONArray user = jso.getJSONArray("users");
 				Match match = Manager.get().findMatch(matchId);
-				match.enviarMensaje(jso.getString("texto"));
+				match.enviarMensaje(jso.getString("texto"), speaker);
 			// }
 		}
 	}

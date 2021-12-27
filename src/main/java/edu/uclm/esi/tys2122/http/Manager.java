@@ -101,7 +101,7 @@ public class Manager {
 	}
 	public void add(WrapperSession wrapperSession, String httpSessionId) {
 		HttpSession httpSession = this.httpSessions.get(httpSessionId);
-		User user = (User) httpSession.getAttribute("userId");
+		User user = (User) httpSession.getAttribute("user");
 		user.setSession(wrapperSession);
 		wrapperSession.setHttpSession(httpSession);
 		wrapperSession.setWsSession(wrapperSession.getWsSession());

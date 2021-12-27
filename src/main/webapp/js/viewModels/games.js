@@ -10,6 +10,9 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 			self.error = ko.observable(null);
 			
 			self.mensaje = ko.observable();
+			
+			self.user1 = null;
+			self.user2 = null;
 
 			self.x = ko.observable(null);
 			self.y = ko.observable(null);
@@ -74,6 +77,7 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 		};
 		
 		conectarAWebSocket() {
+			//let msgPrincipal = "PUEDE COMENZAR CON EL CHAT :D";
 			this.ws = new WebSocket("ws://localhost/wsGenerico");
 			this.ws.onopen = function(event) {
 				alert("Conexión establecida");
@@ -81,23 +85,26 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 				document.getElementById("chatRoomField").disabled = false;
     			document.getElementById("sendField").disabled = false;
     			document.getElementById("sendButton").disabled = false;
+				//document.getElementById("chatRoomField").textContent = msgPrincipal;
 			}
 			this.ws.onmessage = function(event) {
 				let msg = JSON.parse(event.data);
-				console.log(event);
-				alert("onmessage funciona");
-				document.getElementById("chatRoomField").textContent = msg.data;
-
-
+				//console.log(msg.data);
+				document.getElementById("chatRoomField").textContent += '\n'+msg["user"]+': '+msg["texto"];
 			}
 		}
 		
 		enviarMensaje(partida) {
+			let users = partida.players;
+			console.log(users);
+			//this.user1 = JSON.parse(users);
+			//let user = JSON.parse(users);
+			console.log(users);
 			let msg = {
 				type : "MENSAJE DE CHAT",
 				texto : this.mensaje(),
 				matchId : partida.id
-			}			
+			}
 			this.ws.send(JSON.stringify(msg))
 		}
 

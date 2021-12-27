@@ -18,6 +18,19 @@ public class GuessWhoMatch extends Match {
 	private User jugadorA, jugadorB;
 	@Transient
 	private int contadorA = 0, contadorB = 0;
+	@Transient
+	private boolean acierto = false;
+	@Transient
+	private int intentos = 0;
+	
+	
+	public int getIntentos() {
+		return intentos;
+	}
+	
+	public boolean isAcierto() {
+		return acierto;
+	}
 	
 
 	@Override
@@ -52,13 +65,15 @@ public class GuessWhoMatch extends Match {
 			User user = this.findUser(userId);
 			if (user==this.players.get(0)) {
 				contadorA++;
-				if(this.cartaB.equals(carta) && contadorA <3) {
+				intentos++;
+				if(this.cartaB.equals(carta) && contadorA <2) {
+					this.acierto = true;
 					this.winner = this.jugadorA;
 					this.looser = this.jugadorB;
 					//metodo para acabar
 
 				}
-				else if (contadorA > 2) {
+				else if (contadorA > 1) {
 					this.winner = this.jugadorB;
 					this.looser = this.jugadorA;
 
@@ -66,24 +81,19 @@ public class GuessWhoMatch extends Match {
 				
 			}else {
 				contadorB++;
-				if(this.cartaA.equals(carta) && contadorB <3) {
+				intentos++;
+				if(this.cartaA.equals(carta) && contadorB <2) {
+					this.acierto = true;
 					this.winner = this.jugadorB;
 					this.looser = this.jugadorA;
 
 				}
-				else if (contadorB > 2) {
+				else if (contadorB > 1) {
 					this.winner = this.jugadorA;
 					this.looser = this.jugadorB;
 				}
 			}
 				
-		}
-		else if (type.equals("chat")) {
-
-			User user = this.findUser(userId);
-			String nombreUser = user.getName();
-			
-
 		}
 		
 	}
