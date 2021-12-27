@@ -46,8 +46,13 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 					type : "put",
 					contentType : 'application/json',
 					success : function(response) {
-						self.error("");
-						self.message(response);
+						if(response == "Email inválido"){
+							self.error("Email inválido");
+							self.message("");	
+						}else {
+							self.message(response);
+							self.error("");	
+						}
 					},
 					error : function(response) {
 						self.message("");

@@ -30,6 +30,9 @@ import edu.uclm.esi.tys2122.model.Token;
 import edu.uclm.esi.tys2122.model.User;
 import edu.uclm.esi.tys2122.services.UserService;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @RestController
 @RequestMapping("user")
 public class UserController extends CookiesController {
@@ -70,26 +73,46 @@ public class UserController extends CookiesController {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Error: la contraseña debe tener al menos cuatro caracteres");
 		
 		//clase
+		/*
 		MessageDigest digest = MessageDigest.getInstance("SHA3-256");
 		byte[] hashbytes = digest.digest(
 		pwd1.getBytes(StandardCharsets.UTF_8));
 		pwd1 = new String(hashbytes);
+		*/
 		
-		User user = new User();
-		user.setName(userName);
-		user.setEmail(email);
-		user.setPwd(pwd1);
-		user.setPicture(picture);
+		if(comprobarEmail(email) == true) {
+			User user = new User();
+			user.setName(userName);
+			user.setEmail(email);
+			user.setPwd(pwd1);
+			user.setPicture(picture);
+			
+			userService.save(user);
+			
+			Token token = new Token(email);
+			tokenDAO.save(token);
+			
+			Email sender = new Email();
+			sender.send(email, "Hola", "Haz click en " + "https://localhost/user/validateAccount/" + token.getId());
+			
+			return "Te hemos enviado un correo para confirmar tu registro";
+		}
+		return "Email inválido";
+	}
+	
+	public boolean comprobarEmail(String email) {
+		boolean bool = false;
 		
-		userService.save(user);
-		
-		Token token = new Token(email);
-		tokenDAO.save(token);
-		
-		Email sender = new Email();
-		sender.send(email, "Hola", "Haz click en " + "https://localhost/user/validateAccount/" + token.getId());
-		
-		return "Te hemos enviado un correo para confirmar tu registro";
+		// Patrón para validar el email
+        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+ 
+        Matcher mather = pattern.matcher(email);
+ 
+        if (mather.find() == true) {
+        	bool = true;
+        }
+		return bool;
 	}
 	
 	@DeleteMapping("/remove/{userId}")

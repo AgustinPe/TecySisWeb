@@ -38,9 +38,10 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 				contentType : 'application/json',
 				success : function(response) {
 					app.router.go( { path : "games"} );
+					self.error("");
 				},
 				error : function(response) {
-					self.error(response.responseJSON.errorMessage);
+					self.error("Error, credenciales no válidas");
 				}
 			};
 			$.ajax(data);
