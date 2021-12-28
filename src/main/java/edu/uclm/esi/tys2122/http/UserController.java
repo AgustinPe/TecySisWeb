@@ -92,8 +92,8 @@ public class UserController extends CookiesController {
 			Token token = new Token(email);
 			tokenDAO.save(token);
 			
-			Email sender = new Email();
-			sender.send(email, "Hola", "Haz click en " + "https://localhost/user/validateAccount/" + token.getId());
+			//Email sender = new Email();
+			//sender.send(email, "Hola", "Haz click en " + "https://localhost/user/validateAccount/" + token.getId());
 			
 			return "Te hemos enviado un correo para confirmar tu registro";
 		}

@@ -39,9 +39,14 @@ public class UserService {
 		if (user==null) //  || user.getConfirmationDate()==null)
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Credenciales no válidas o cuenta no validada");
 		for(int i = 0; i < this.connectedUsers.size(); i++) {
-			if(user.getName() == findUser(user.getId()).getName()) {
-				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Error, este usuario ya está conectado");
+			User usuarioConectado = findUser(user.getId());
+			if(usuarioConectado != null) {
+				
+				if(user.getName() == usuarioConectado.getName() ) {
+					throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Error, este usuario ya está conectado");
+				}
 			}
+			
 		}
 		this.connectedUsers.put(user.getId(), user);
 		return user;
