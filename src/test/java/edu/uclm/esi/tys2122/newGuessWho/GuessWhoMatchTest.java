@@ -74,12 +74,14 @@ public class GuessWhoMatchTest extends MvcTestCase {
 		JSONObject jsoPartidaAna = new JSONObject(response);
 		
 		assertTrue(jsoPartidaPepe.getString("id").equals(jsoPartidaAna.getString("id")));
-		assertTrue(jsoPartidaAna.getBoolean("ready"));
+		assertFalse(jsoPartidaAna.getBoolean("ready"));
 		
 		System.out.println(jsoPartidaAna.toString());
 		String matchId = jsoPartidaAna.getString("id");
 		
-		
+
+		result = doPost("games/move", null, 
+				"matchId", matchId).andReturn();
 		
 	
 		}

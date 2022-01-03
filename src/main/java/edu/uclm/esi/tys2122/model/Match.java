@@ -20,6 +20,8 @@ import edu.uclm.esi.tys2122.websockets.WrapperSession;
 @Entity
 @Table(name = "partida")
 public abstract class Match {
+
+
 	@Id
 	@Column(length = 36)
 	private String id;
@@ -35,6 +37,7 @@ public abstract class Match {
 	
 	@Transient
 	protected User winner, looser;
+	@Transient
 	protected boolean draw;
 	
 	@Transient
@@ -113,6 +116,14 @@ public abstract class Match {
 
 	public void setReady(boolean ready) {
 		this.ready = ready;
+	}
+	
+	public void setPlayers(Vector<User> players) {
+		this.players = players;
+	}
+
+	public void setPlayerWithTurn(User playerWithTurn) {
+		this.playerWithTurn = playerWithTurn;
 	}
 	
 	protected User findUser(String userId) {

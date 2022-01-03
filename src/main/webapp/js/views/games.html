@@ -115,10 +115,28 @@
 
 	              <!-- /ko -->
 					<h4>Este eres tu:</h4>
-		           <img data-bind="attr : { src : carta }"> 
+		           <img data-bind="attr : { src : cartaSrc }"> 
 		           <h4>Resuelve quien es tu rival</h4>
-		           <select
-						id="nombres" data-bind="options : cartas, value : cartaQueAdivino">
+		         
+		         <select 
+		         id="nombres" data-bind="options : cartasBien, value : cartaQueAdivino">
+		         
+		          
+		          <!-- <select  id="nombres" data-bind="options : cartas"> 
+						    <option value= "css/images/Arturo.png">Arturo</option>
+							<option data-bind = value= "css/images/Celia.png">Celia</option>						    
+							<option data-bind = value= "css/images/Esther.png">Esther</option>
+							<option data-bind = value= "css/images/Hector.png">Hector</option>
+							<option data-bind = value= "css/images/Manuel.png">Manuel</option>
+							<option data-bind = value= "css/images/Maria.png">Maria</option>
+							<option data-bind = value= "css/images/Pablo.png">Pablo</option>
+							<option data-bind = value= "css/images/Raquel.png">Raquel</option>
+							<option data-bind = value= "css/images/Ricardo.png">Ricardo</option>
+							<option data-bind = value= "css/images/Sara.png">Sara</option>
+							<option data-bind = value= "css/images/Simon.png">Simon</option>
+							<option data-bind = value= "css/images/Sofia.png">Sofia</option>
+		           --> 		
+    						
 				</select> 
 				<button data-bind="click : adivinar">Adivinar</button>
 				<!-- /ko -->

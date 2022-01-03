@@ -12,6 +12,7 @@ import edu.uclm.esi.tys2122.model.User;
 
 @Entity
 public class GuessWhoMatch extends Match {
+
 	@Transient
 	private String cartaA, cartaB;
 	@Transient
@@ -97,5 +98,62 @@ public class GuessWhoMatch extends Match {
 		}
 		
 	}
+	
+	public String getCartaA() {
+		return cartaA;
+	}
+
+	public void setCartaA(String cartaA) {
+		this.cartaA = cartaA;
+	}
+
+	public String getCartaB() {
+		return cartaB;
+	}
+
+	public void setCartaB(String cartaB) {
+		this.cartaB = cartaB;
+	}
+
+	public User getJugadorA() {
+		return jugadorA;
+	}
+
+	public void setJugadorA(User jugadorA) {
+		this.jugadorA = jugadorA;
+	}
+
+	public User getJugadorB() {
+		return jugadorB;
+	}
+
+	public void setJugadorB(User jugadorB) {
+		this.jugadorB = jugadorB;
+	}
+
+	public int getContadorA() {
+		return contadorA;
+	}
+
+	public void setContadorA(int contadorA) {
+		this.contadorA = contadorA;
+	}
+
+	public int getContadorB() {
+		return contadorB;
+	}
+
+	public void setContadorB(int contadorB) {
+		this.contadorB = contadorB;
+	}
+
+	public void setAcierto(boolean acierto) {
+		this.acierto = acierto;
+	}
+
+	public void setIntentos(int intentos) {
+		this.intentos = intentos;
+	}
+
 
 }

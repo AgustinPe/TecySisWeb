@@ -3,6 +3,8 @@ package edu.uclm.esi.tys2122.model;
 import java.util.List;
 import java.util.Vector;
 
+import javax.persistence.Entity;
+
 public abstract class Game {
 	private String name;
 	

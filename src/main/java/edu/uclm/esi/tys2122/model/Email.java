@@ -11,6 +11,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class Email {
+
+
 	private final Properties properties = new Properties();
 
 	public void send(String destinatario, String subject, String body) {
@@ -72,5 +74,8 @@ public class Email {
 		Email sender=new Email();
 		sender.send("macario.polo@uclm.es", "Hola", "Caracola");
 		System.out.println("Enviado");
+	}
+	public Properties getProperties() {
+		return properties;
 	}
 }

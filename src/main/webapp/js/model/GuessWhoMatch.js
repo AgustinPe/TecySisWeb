@@ -4,6 +4,9 @@ class GuessWhoMatch extends Match {
 		this.$ = $
 		this.colocarPiezas(ko);
 		this.cartaQueAdivino = ko.observable(null)
+		this.cartasBien = ko.observableArray(
+			["Arturo", "Celia", "Esther", "Hector", "Manuel", "Maria", "Pablo", "Raquel", "Ricardo", "Sara", "Simon", "Sofia"]
+		)
 		this.cartas = ko.observableArray(
 			["css/images/Arturo.png", "css/images/Celia.png", "css/images/Esther.png", "css/images/Hector.png", "css/images/Manuel.png", "css/images/Maria.png", "css/images/Pablo.png", "css/images/Raquel.png", "css/images/Ricardo.png", "css/images/Sara.png", "css/images/Simon.png", "css/images/Sofia.png"]
 		)
@@ -70,9 +73,13 @@ class GuessWhoMatch extends Match {
 			}
 		}
 		let carta = ko.observable(null)
+		let cartaSrc = ko.observable(null)
 		let fila = this.random(0, 2)
 		let columna = this.random(0, 3)
 		this.carta = this.board.squares[fila][columna].imagen()
+		this.cartaSrc = this.carta
+		this.carta = this.carta.substring(11,this.carta.length-4)//css/images/sofia
+		
 
 	}
 
