@@ -127,6 +127,7 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 						match.colocarPiezas();
 					} else if (response.game == "TictactoeMatch") {
 						match = new TictactoeMatch(response);
+						self.conectarAWebSocket();
 					} else if (response.game == "GuessWhoMatch") {
 						match = new GuessWhoMatch(ko, response, $);
 						self.conectarAWebSocket();

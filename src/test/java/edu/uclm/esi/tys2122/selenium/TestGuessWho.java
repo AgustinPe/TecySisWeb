@@ -72,8 +72,8 @@ public class TestGuessWho {
 		
 		pause(500);
 		
-		WebElement etiqueta = driverPepe.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/h1"));
-		assertTrue(etiqueta.getText().contains("Juegos disponibles"));
+		//WebElement etiqueta = driverPepe.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/h1"));
+		//assertTrue(etiqueta.getText().contains("Juegos disponibles"));
 		
 		this.UnirseAPartida();
 	}
@@ -90,7 +90,8 @@ public class TestGuessWho {
 	}
 	
 	private void jugar() {
-
+		
+		pause(500);
 		Alert simpleAlert = driverPepe.switchTo().alert();
 	    simpleAlert.accept();
 		Alert simpleAlert2 = driverAnonimo.switchTo().alert();
@@ -148,20 +149,28 @@ public class TestGuessWho {
 		selectPepe.selectByVisibleText(cartaAnonimo);
 		//driverPepe.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/select/option[@value = "+cartaAnonimo+"]")).click();
 		driverPepe.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/button")).click();
+		
+		pause(500);
+		
 		Alert simpleAlertWin = driverPepe.switchTo().alert();
 	    simpleAlertWin.accept();
 
-	    
-	    tearDown();
-	}
+	    	}
 
 	@AfterAll
 	public static void tearDown() {
 		driverAnonimo.quit();
+		pause(500);
+		Alert simpleAlertWinFinal = driverPepe.switchTo().alert();
+	    simpleAlertWinFinal.accept();
+		pause(500);
+
+		
 		driverPepe.quit();
 
 		
 		//userDao.deleteAll();
+		
 	}
 	
 	private static void pause(long milis) {
