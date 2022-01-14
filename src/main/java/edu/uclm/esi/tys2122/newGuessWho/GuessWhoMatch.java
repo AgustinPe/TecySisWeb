@@ -72,7 +72,7 @@ public class GuessWhoMatch extends Match {
 					this.winner = this.jugadorA;
 					this.looser = this.jugadorB;
 					//metodo para acabar
-
+					this.looser.notificarDerrota();
 				}
 				else if (contadorA > 1) {
 					this.winner = this.jugadorB;

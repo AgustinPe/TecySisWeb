@@ -117,5 +117,9 @@ public class User {
 		wsSession.sendMessage(new TextMessage(jso.toString()));
 	}
 
+	public void notificarDerrota() {
+		//jso con type derrota y mandar 
+	}
+
 
 }

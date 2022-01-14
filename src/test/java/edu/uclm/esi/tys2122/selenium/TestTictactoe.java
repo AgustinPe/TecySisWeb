@@ -158,8 +158,8 @@ public class TestTictactoe {
 		
 		//movimiento 5
 		
-		djct.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/input[10]")).sendKeys("0");
-		djct.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/input[11]")).sendKeys("1");
+		djct.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/input[10]")).sendKeys("1");
+		djct.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/input[11]")).sendKeys("0");
 		djct.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/button[1]")).click();
 		djct.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/input[10]")).clear();
 		djct.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/input[11]")).clear();
@@ -167,9 +167,13 @@ public class TestTictactoe {
 		driverPepe.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/button[2]")).click();
 		driverAnonimo.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/button[2]")).click();
 		
+		djct.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/form/input[1]")).sendKeys("he ganado buena partida");
+		djct.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/form/input[2]")).click();
+		djct.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/form/input[1]")).clear();
+		
 		djct = djct==driverPepe ? driverAnonimo : driverPepe;
 		
-		djct.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/form/input[1]")).sendKeys("he ganado buena partida");
+		djct.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/form/input[1]")).sendKeys("he perdido buena partida");
 		djct.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/form/input[2]")).click();
 		djct.findElement(By.xpath("/html/body/div/oj-module/div[1]/div[2]/div/div/ol/li/form/input[1]")).clear();
 
