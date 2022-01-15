@@ -79,10 +79,22 @@ public class GuessWhoMatchTest extends MvcTestCase {
 		System.out.println(jsoPartidaAna.toString());
 		String matchId = jsoPartidaAna.getString("id");
 		
-
-		result = doPost("games/move", null, 
-				"matchId", matchId).andReturn();
 		
+		HttpSession sessionAna = this.sessionAna;
+		HttpSession sessionPepe = this.sessionPepe;
+		
+		//poner carta de pepe
+		result = doPost("games/move", sessionPepe, "matchId", matchId, "type", "carta", "carta","css/images/Celia.png").andReturn();
+
+		
+		//poner carta Ana
+		result = doPost("games/move", sessionAna, "matchId", matchId, "type", "carta", "carta","css/images/Arturo.png").andReturn();
+
+
+		//adivinar de pepe
 	
+		result = doPost("games/move", sessionPepe, "matchId", matchId, "type", "cartaQueAdivino", "carta","css/images/Arturo.png").andReturn();
+
+		
 		}
 	}
