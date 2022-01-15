@@ -49,9 +49,64 @@ public class GuessWhoMatch extends Match {
 	@Override
 	public void move(String userId, JSONObject jso) throws Exception {
 		String type = jso.optString("type");
+		User user = this.findUser(userId);
+		String carta = jso.getString("carta");
+		
 		if (type.equals("carta")) {
-			String carta = jso.getString("carta");
-			User user = this.findUser(userId);
+			cartaGanadora(type, user, jso,carta);
+		}
+				
+		else if (type.equals("cartaQueAdivino")) {
+			adivinarCarta(type,user,jso,carta);
+		}
+		
+	}
+	
+	private void adivinarCarta(String type, User user, JSONObject jso, String carta) {
+		if (user==this.players.get(0)) {
+			comprobarGanadorA(carta);
+			contadorA++;
+			intentos++;
+
+		}else {
+			comprobarGanadorB(carta);
+			contadorB++;
+			intentos++;
+		}
+		
+	}
+
+	private void comprobarGanadorA(String carta) {
+		
+		if(this.cartaB.equals(carta) && contadorA <2) {
+			this.acierto = true;
+			this.winner = this.jugadorA;
+			this.looser = this.jugadorB;
+			//metodo para acabar
+			this.looser.notificarDerrota(winner, looser);
+		}
+		else if (contadorA > 1) {
+			this.winner = this.jugadorB;
+			this.looser = this.jugadorA;
+			this.looser.notificarDerrota(winner, looser);
+		}
+		
+	}
+	private void comprobarGanadorB(String carta) {
+		if(this.cartaA.equals(carta) && contadorB <2) {
+			this.acierto = true;
+			this.winner = this.jugadorB;
+			this.looser = this.jugadorA;
+			this.looser.notificarDerrota(winner, looser);
+		}
+		else if (contadorB > 1) {
+			this.winner = this.jugadorA;
+			this.looser = this.jugadorB;
+			this.looser.notificarDerrota(winner, looser);
+		}
+	}
+
+	private void cartaGanadora(String type, User user, JSONObject jso, String carta) {
 			if (user==this.players.get(0)) {
 				this.cartaA = carta;
 				this.jugadorA = user;
@@ -60,46 +115,8 @@ public class GuessWhoMatch extends Match {
 				this.cartaB = carta;
 				this.jugadorB = user;
 			}
-				
-		} else if (type.equals("cartaQueAdivino")) {
-			String carta = jso.getString("carta");
-			User user = this.findUser(userId);
-			if (user==this.players.get(0)) {
-				contadorA++;
-				intentos++;
-				if(this.cartaB.equals(carta) && contadorA <2) {
-					this.acierto = true;
-					this.winner = this.jugadorA;
-					this.looser = this.jugadorB;
-					//metodo para acabar
-					this.looser.notificarDerrota(winner, looser);
-				}
-				else if (contadorA > 1) {
-					this.winner = this.jugadorB;
-					this.looser = this.jugadorA;
-					this.looser.notificarDerrota(winner, looser);
-				}
-				
-			}else {
-				contadorB++;
-				intentos++;
-				if(this.cartaA.equals(carta) && contadorB <2) {
-					this.acierto = true;
-					this.winner = this.jugadorB;
-					this.looser = this.jugadorA;
-					this.looser.notificarDerrota(winner, looser);
-				}
-				else if (contadorB > 1) {
-					this.winner = this.jugadorA;
-					this.looser = this.jugadorB;
-					this.looser.notificarDerrota(winner, looser);
-				}
-			}
-				
-		}
-		
 	}
-	
+
 	public String getCartaA() {
 		return cartaA;
 	}
