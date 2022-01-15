@@ -72,12 +72,12 @@ public class GuessWhoMatch extends Match {
 					this.winner = this.jugadorA;
 					this.looser = this.jugadorB;
 					//metodo para acabar
-					this.looser.notificarDerrota();
+					this.looser.notificarDerrota(winner, looser);
 				}
 				else if (contadorA > 1) {
 					this.winner = this.jugadorB;
 					this.looser = this.jugadorA;
-
+					this.looser.notificarDerrota(winner, looser);
 				}
 				
 			}else {
@@ -87,11 +87,12 @@ public class GuessWhoMatch extends Match {
 					this.acierto = true;
 					this.winner = this.jugadorB;
 					this.looser = this.jugadorA;
-
+					this.looser.notificarDerrota(winner, looser);
 				}
 				else if (contadorB > 1) {
 					this.winner = this.jugadorA;
 					this.looser = this.jugadorB;
+					this.looser.notificarDerrota(winner, looser);
 				}
 			}
 				

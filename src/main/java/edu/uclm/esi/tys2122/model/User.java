@@ -117,8 +117,21 @@ public class User {
 		wsSession.sendMessage(new TextMessage(jso.toString()));
 	}
 
-	public void notificarDerrota() {
+	public void notificarDerrota(User winner, User looser) {
 		//jso con type derrota y mandar 
+		JSONObject jso = new JSONObject();
+		String nameWinner = winner.getName();
+		String nameLooser= looser.getName();
+		
+		jso.put("type", "VictoriaDerrota");
+		jso.put("winner", nameWinner);
+		jso.put("looser", nameLooser);
+		
+		try {
+			looser.sendMessage(jso);
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 

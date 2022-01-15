@@ -133,7 +133,7 @@ class GuessWhoMatch extends Match {
 					else
 						alert("Te has quedado sin intentos, por lo que has perdido\nGANADOR: "+response.winner.name+"\nPERDEDOR: "+response.looser.name)
 				else
-					alert("GANADOR: "+response.winner.name+"\nPERDEDOR: "+response.looser.name);
+					alert("¡Has ganado!\nGANADOR: "+response.winner.name+"\nPERDEDOR: "+response.looser.name);
 				
 			},
 			error : function(response) {

@@ -92,8 +92,10 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 				let msg = JSON.parse(event.data);
 				if(msg["type"] == "MENSAJE DE ABANDONO"){
 					alert(msg["texto"]);
-				}else{
+				}else if (msg["type"] == "MENSAJE DE CHAT"){
 					document.getElementById("chatRoomField").textContent += '\n'+msg["user"]+': '+msg["texto"];
+				}else if (msg["type"] == "VictoriaDerrota"){
+					alert("¡Has perdido!\nGANADOR: "+msg["winner"]+"\nPERDEDOR: "+msg["looser"]);
 				}
 				
 				
