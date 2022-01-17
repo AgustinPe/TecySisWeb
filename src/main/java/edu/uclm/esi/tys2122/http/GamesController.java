@@ -83,6 +83,9 @@ public class GamesController extends CookiesController {
 		Match match = gamesService.getMatch(jso.getString("matchId"));
 		try {
 			match.move(user.getId(), jso);
+			if(match.getWinner()!=null) {
+				gamesService.put(match);
+			}
 			return match;
 		} catch (Exception e) {
  			throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());

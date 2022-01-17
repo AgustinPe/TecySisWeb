@@ -80,22 +80,6 @@
               <button data-bind="click : function() { $parent.reload($data); }">Recargar partida</button>
 	              
 	          <!-- /ko -->
-	          
-	          <!-- ko if : game=="ChessMatch" -->
-	          	<!-- ko with : board -->
-	          		<table border="1">
-		                <!-- ko foreach : squares -->
-		                	<tr>
-								<!-- ko foreach : $data -->
-									  <td>
-									  	 <img data-bind="attr : { src : imagen }, style : { 'background-color' : color }">
-									  </td>
-								<!-- /ko -->
-							</tr>
-		                <!-- /ko -->
-		            </table>
-	              <!-- /ko -->
-	          <!-- /ko -->
 
 	          <!-- ko if : game=="GuessWhoMatch" -->
 	          	<!-- ko with : board -->

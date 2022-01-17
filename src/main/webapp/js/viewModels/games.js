@@ -124,10 +124,7 @@ define([ 'knockout', 'appController', 'ojs/ojmodule-element-utils', 'accUtils',
 				url : "/games/joinGame/" + game.name,
 				success : function(response) {
 					let match;
-					if (response.game == "ChessMatch") {
-						match = new ChessMatch(response);
-						match.colocarPiezas();
-					} else if (response.game == "TictactoeMatch") {
+					if (response.game == "TictactoeMatch") {
 						match = new TictactoeMatch(response);
 						self.conectarAWebSocket();
 					} else if (response.game == "GuessWhoMatch") {

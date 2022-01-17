@@ -20,6 +20,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import edu.uclm.esi.tys2122.http.Manager;
 import edu.uclm.esi.tys2122.websockets.WrapperSession;
 
 @Entity
@@ -132,6 +133,7 @@ public class User {
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 
