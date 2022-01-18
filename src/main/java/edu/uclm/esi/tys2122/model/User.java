@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
@@ -39,6 +40,9 @@ public class User {
 	private String pwd;
 	private String picture;
 	private Long confirmationDate;
+	
+	//@OneToOne(mappedBy = "winner")
+	//private Match match;
 	
 	@Transient
 	private WrapperSession session;
