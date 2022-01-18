@@ -67,6 +67,9 @@ public class GamesController extends CookiesController {
 		
 		Match match = getMatch(game);
 		match.addPlayer(user);
+		if (match.getPlayers().size() == 2) {
+			match.setReady(true);
+		}
 		if (match.isReady()) {
 			game.getPendingMatches().remove(match);
 			game.getPlayingMatches().add(match);

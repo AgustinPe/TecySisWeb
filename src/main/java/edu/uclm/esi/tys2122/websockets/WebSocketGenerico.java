@@ -82,7 +82,9 @@ public class WebSocketGenerico extends TextWebSocketHandler {
 			String mensaje = "El jugador "+match.getWinner().getName()+" ha ganado.\nEl jugador "+match.getLooser().getName()+" ha perdido.";
 			match.enviarMensajeSalirPartida(mensaje, match.getWinner());
 		}
+		session.close();
 		super.afterConnectionClosed(session, status);
+		
 	}
 	
 	@Override
@@ -104,6 +106,7 @@ public class WebSocketGenerico extends TextWebSocketHandler {
 			// }
 		}
 	}
+	
 
 	@Override
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {

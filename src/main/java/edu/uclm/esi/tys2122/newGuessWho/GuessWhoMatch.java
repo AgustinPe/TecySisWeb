@@ -25,6 +25,7 @@ public class GuessWhoMatch extends Match {
 	private int intentos = 0;
 	
 	
+	
 	public int getIntentos() {
 		return intentos;
 	}
@@ -84,11 +85,13 @@ public class GuessWhoMatch extends Match {
 			this.looser = this.jugadorB;
 			//metodo para acabar
 			this.looser.notificarDerrota(winner, looser);
+			
 		}
 		else if (contadorA > 1) {
 			this.winner = this.jugadorB;
 			this.looser = this.jugadorA;
 			this.looser.notificarDerrota(winner, looser);
+
 		}
 		
 	}
@@ -98,11 +101,13 @@ public class GuessWhoMatch extends Match {
 			this.winner = this.jugadorB;
 			this.looser = this.jugadorA;
 			this.looser.notificarDerrota(winner, looser);
+
 		}
 		else if (contadorB > 1) {
 			this.winner = this.jugadorA;
 			this.looser = this.jugadorB;
 			this.looser.notificarDerrota(winner, looser);
+
 		}
 	}
 
