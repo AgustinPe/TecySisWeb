@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import edu.uclm.esi.tys2122.dao.MatchRepository;
 import edu.uclm.esi.tys2122.dao.UserRepository;
 import edu.uclm.esi.tys2122.model.Game;
 import edu.uclm.esi.tys2122.model.Match;
@@ -35,6 +36,9 @@ public class GamesController extends CookiesController {
 	
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private MatchRepository matchRepo;
 	
 	@GetMapping("/getGames")
 	public List<Game> getGames(HttpSession session) throws Exception {
@@ -86,10 +90,14 @@ public class GamesController extends CookiesController {
 		Match match = gamesService.getMatch(jso.getString("matchId"));
 		try {
 			match.move(user.getId(), jso);
+			if(match.getWinner() != null) {
+				matchRepo.save(match);
+			}
 			return match;
 		} catch (Exception e) {
  			throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
 		}
+
 	}
 	
 	@GetMapping("/findMatch/{matchId}")
